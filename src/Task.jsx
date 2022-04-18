@@ -11,7 +11,7 @@ function Task({ id, isCompleted, name }) {
 
     const taskIndex = getTaskById(id);
 
-    saveTaskByIndex({ id, name: 'sff', isCompleted: !completed }, taskIndex);
+    saveTaskByIndex({ id, name, isCompleted: !completed }, taskIndex);
   };
 
   return (
