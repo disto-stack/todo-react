@@ -12,6 +12,9 @@ function Task({ isCompleted, name }) {
         type="checkbox"
         name="taskIsCompleted"
         checked={completed}
+        onChange={() => {
+          setCompleted(!completed);
+        }}
       />
       <span className="task-text task-completed">{name}</span>
     </article>

@@ -1,29 +1,42 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import './App.css';
 
 import Navbar from './Navbar';
 import Task from './Task';
 
-const loadTasks = () => [
-  {
-    id: Date.now(),
-    isCompleted: true,
-    name: 'Task 2',
-  },
-  {
-    id: Date.now(),
-    isCompleted: false,
-    name: 'Task 1',
-  },
-  {
-    id: Date.now(),
-    isCompleted: true,
-    name: 'Task 3',
-  },
-];
+const loadTasks = () => JSON.parse(localStorage.getItem('tasks')) || [];
+
+const saveTaskOnLocalstorage = (tasks) => {
+  if (localStorage.getItem('tasks')) {
+    localStorage.removeItem('tasks');
+  }
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+};
 
 function Todo() {
+  const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState(loadTasks());
+
+  const addNewTask = useCallback(
+    (event) => {
+      if (newTask !== '') {
+        event.preventDefault();
+
+        const taskToCreate = {
+          id: Date.now(),
+          name: newTask,
+          isCompleted: false,
+        };
+
+        const newTaskList = [...tasks, taskToCreate];
+
+        setTasks(newTaskList);
+        saveTaskOnLocalstorage(newTaskList);
+      }
+    },
+    [tasks, newTask]
+  );
 
   return (
     <div className="app-container">
@@ -33,13 +46,15 @@ function Todo() {
       </header>
 
       <main>
-        <form className="app-form">
+        <form className="app-form" onSubmit={addNewTask}>
           <label htmlFor="newTask">
             <input
               type="text"
               id="newTask"
               name="newTask"
               placeholder="Add details"
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
             />
           </label>
           <button className="submit-button" type="submit">
@@ -51,7 +66,7 @@ function Todo() {
           {tasks.map((task) => (
             <Task
               isCompleted={task.isCompleted}
-              key={task.name}
+              key={task.id}
               name={task.name}
             />
           ))}
