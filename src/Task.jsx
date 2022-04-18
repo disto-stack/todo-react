@@ -6,9 +6,14 @@ function Task({ isCompleted, name }) {
   const [completed, setCompleted] = useState(isCompleted);
 
   return (
-    <article>
-      <input type="checkbox" name="taskIsCompleted" checked={completed} />
-      <span>{name}</span>
+    <article className="task">
+      <input
+        className="task-checkbox"
+        type="checkbox"
+        name="taskIsCompleted"
+        checked={completed}
+      />
+      <span className="task-text task-completed">{name}</span>
     </article>
   );
 }

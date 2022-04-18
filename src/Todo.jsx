@@ -26,16 +26,14 @@ function Todo() {
   const [tasks, setTasks] = useState(loadTasks());
 
   return (
-    <div>
+    <div className="app-container">
       <header>
         <h1 className="app-title">#todo</h1>
         <Navbar />
       </header>
 
       <main>
-        <br />
-        <br />
-        <form>
+        <form className="app-form">
           <label htmlFor="newTask">
             <input
               type="text"
@@ -44,10 +42,12 @@ function Todo() {
               placeholder="Add details"
             />
           </label>
-          <button type="submit">Add</button>
+          <button className="submit-button" type="submit">
+            Add
+          </button>
         </form>
 
-        <section>
+        <section className="task-section">
           {tasks.map((task) => (
             <Task
               isCompleted={task.isCompleted}

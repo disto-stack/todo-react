@@ -6,10 +6,6 @@
   --app-danger: #eb5757;
 }
 
-#root {
-  width: 60vh;
-}
-
 body {
   font-family: 'Montserrat', sans-serif;
   height: 100vh;
