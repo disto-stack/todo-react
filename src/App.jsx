@@ -5,7 +5,6 @@ import Todo from './Todo';
 function App() {
   return (
     <div>
-      <h1>#todo</h1>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Todo />} />

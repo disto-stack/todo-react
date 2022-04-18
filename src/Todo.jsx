@@ -1,16 +1,40 @@
+import { useState } from 'react';
 import './App.css';
 
 import Navbar from './Navbar';
 import Task from './Task';
 
+const loadTasks = () => [
+  {
+    id: Date.now(),
+    isCompleted: true,
+    name: 'Task 2',
+  },
+  {
+    id: Date.now(),
+    isCompleted: false,
+    name: 'Task 1',
+  },
+  {
+    id: Date.now(),
+    isCompleted: true,
+    name: 'Task 3',
+  },
+];
+
 function Todo() {
+  const [tasks, setTasks] = useState(loadTasks());
+
   return (
     <div>
       <header>
+        <h1 className="app-title">#todo</h1>
         <Navbar />
       </header>
 
       <main>
+        <br />
+        <br />
         <form>
           <label htmlFor="newTask">
             <input
@@ -22,11 +46,17 @@ function Todo() {
           </label>
           <button type="submit">Add</button>
         </form>
-      </main>
 
-      <Task isCompleted={false} name="Task number 1" />
-      <Task isCompleted name="Task number 3" />
-      <Task isCompleted name="Task number 2" />
+        <section>
+          {tasks.map((task) => (
+            <Task
+              isCompleted={task.isCompleted}
+              key={task.name}
+              name={task.name}
+            />
+          ))}
+        </section>
+      </main>
     </div>
   );
 }
