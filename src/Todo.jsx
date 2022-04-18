@@ -1,18 +1,10 @@
 import { useCallback, useState } from 'react';
 import './App.css';
 
+import { loadTasks, saveTaskOnLocalstorage } from './localstorage/helpers';
+
 import Navbar from './Navbar';
 import Task from './Task';
-
-const loadTasks = () => JSON.parse(localStorage.getItem('tasks')) || [];
-
-const saveTaskOnLocalstorage = (tasks) => {
-  if (localStorage.getItem('tasks')) {
-    localStorage.removeItem('tasks');
-  }
-
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-};
 
 function Todo() {
   const [newTask, setNewTask] = useState('');
@@ -67,6 +59,7 @@ function Todo() {
             <Task
               isCompleted={task.isCompleted}
               key={task.id}
+              id={task.id}
               name={task.name}
             />
           ))}
