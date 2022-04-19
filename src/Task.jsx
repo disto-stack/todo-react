@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { getTaskById, saveTaskByIndex } from './localstorage/helpers';
 
+import TasksContext from './context/TasksContext';
+
 function Task({ id, isCompleted, name }) {
   const [completed, setCompleted] = useState(isCompleted);
+  const rerenderTasks = useContext(TasksContext);
 
   const updateTaskList = () => {
     setCompleted(!completed);
 
     const taskIndex = getTaskById(id);
-
     saveTaskByIndex({ id, name, isCompleted: !completed }, taskIndex);
+
+    rerenderTasks();
   };
 
   return (

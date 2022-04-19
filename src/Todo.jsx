@@ -7,6 +7,8 @@ import { loadTasks, saveTaskOnLocalstorage } from './localstorage/helpers';
 import Navbar from './Navbar';
 import TasksList from './TasksList';
 
+import TasksContext from './context/TasksContext';
+
 function Todo() {
   const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState(loadTasks());
@@ -36,6 +38,10 @@ function Todo() {
     [tasks, newTask]
   );
 
+  const rerenderTasks = useCallback(() => {
+    setTasks(loadTasks());
+  }, []);
+
   return (
     <div className="app-container">
       <header>
@@ -63,7 +69,9 @@ function Todo() {
         ) : null}
 
         <section className="task-section">
-          <TasksList filter={searchParamValue} tasks={tasks} />
+          <TasksContext.Provider value={rerenderTasks}>
+            <TasksList filter={searchParamValue} tasks={tasks} />
+          </TasksContext.Provider>
         </section>
       </main>
     </div>
