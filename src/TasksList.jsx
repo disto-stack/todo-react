@@ -1,6 +1,19 @@
+import { useContext } from 'react';
+
 import Task from './Task';
 
+import TasksContext from './context/TasksContext';
+import { deleteCompletedTasks } from './localstorage/helpers';
+
 function TasksList({ filter, tasks }) {
+  const rendererTasks = useContext(TasksContext);
+
+  const deleteAllCompletedTasks = () => {
+    deleteCompletedTasks();
+
+    rendererTasks();
+  };
+
   const renderTaksWithFilter = () => {
     if (filter === 'completed') {
       const filterTasks = tasks
@@ -20,7 +33,11 @@ function TasksList({ filter, tasks }) {
           <div>
             <section className="completed-tasks">{filterTasks}</section>
 
-            <button className="delete-button" type="button">
+            <button
+              className="delete-button"
+              type="button"
+              onClick={deleteAllCompletedTasks}
+            >
               <span className="material-icons">delete</span> Delete all
             </button>
           </div>

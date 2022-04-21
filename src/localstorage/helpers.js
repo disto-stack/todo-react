@@ -25,3 +25,17 @@ export const saveTaskByIndex = (task, taskIndex) => {
 
   saveTaskOnLocalstorage(tasks);
 };
+
+export const deleteTaskById = (taskId) => {
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+  if (tasks.length > 0) {
+    saveTaskOnLocalstorage(tasks.filter((task) => task.id !== taskId));
+  }
+};
+
+export const deleteCompletedTasks = () => {
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+  return saveTaskOnLocalstorage(tasks.filter((task) => !task.isCompleted));
+};

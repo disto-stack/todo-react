@@ -1,7 +1,11 @@
 import { useContext, useState } from 'react';
 
 import PropTypes from 'prop-types';
-import { getTaskById, saveTaskByIndex } from './localstorage/helpers';
+import {
+  getTaskById,
+  saveTaskByIndex,
+  deleteTaskById,
+} from './localstorage/helpers';
 
 import TasksContext from './context/TasksContext';
 
@@ -9,11 +13,17 @@ function Task({ id, isCompleted, name, toDelete }) {
   const [completed, setCompleted] = useState(isCompleted);
   const rerenderTasks = useContext(TasksContext);
 
-  const updateTaskList = () => {
+  const markTaskAsCompleted = () => {
     setCompleted(!completed);
 
     const taskIndex = getTaskById(id);
     saveTaskByIndex({ id, name, isCompleted: !completed }, taskIndex);
+
+    rerenderTasks();
+  };
+
+  const deleteTask = () => {
+    deleteTaskById(id);
 
     rerenderTasks();
   };
@@ -25,14 +35,18 @@ function Task({ id, isCompleted, name, toDelete }) {
         type="checkbox"
         name="taskIsCompleted"
         checked={completed}
-        onChange={updateTaskList}
+        onChange={markTaskAsCompleted}
       />
       <span className={`task-text ${completed ? 'task-completed' : ''}`}>
         {name}
       </span>
 
       {isCompleted && toDelete ? (
-        <button className="delete-button-icon" type="button">
+        <button
+          className="delete-button-icon"
+          type="button"
+          onClick={deleteTask}
+        >
           <span className="material-icons">delete</span>
         </button>
       ) : null}
