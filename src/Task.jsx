@@ -5,7 +5,7 @@ import { getTaskById, saveTaskByIndex } from './localstorage/helpers';
 
 import TasksContext from './context/TasksContext';
 
-function Task({ id, isCompleted, name }) {
+function Task({ id, isCompleted, name, toDelete }) {
   const [completed, setCompleted] = useState(isCompleted);
   const rerenderTasks = useContext(TasksContext);
 
@@ -30,6 +30,12 @@ function Task({ id, isCompleted, name }) {
       <span className={`task-text ${completed ? 'task-completed' : ''}`}>
         {name}
       </span>
+
+      {isCompleted && toDelete ? (
+        <button className="delete-button-icon" type="button">
+          <span className="material-icons">delete</span>
+        </button>
+      ) : null}
     </article>
   );
 }
@@ -38,6 +44,11 @@ Task.propTypes = {
   id: PropTypes.number.isRequired,
   isCompleted: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
+  toDelete: PropTypes.bool,
+};
+
+Task.defaultProps = {
+  toDelete: false,
 };
 
 export default Task;

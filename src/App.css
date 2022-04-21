@@ -115,3 +115,33 @@ main {
 .task-text.task-completed {
   text-decoration: line-through;
 }
+
+.completed-tasks {
+}
+.delete-button {
+  margin-left: auto;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 7px 10px;
+  color: white;
+  border: none;
+  background-color: var(--app-danger);
+  border-radius: 4px;
+  transition: opacity 100ms ease-in-out;
+}
+
+.delete-button:hover {
+  opacity: 0.9;
+}
+
+.delete-button-icon {
+  background-color: transparent;
+  border: none;
+  margin-left: auto;
+  padding: 0;
+  color: var(--nav-border);
+  cursor: pointer;
+}
